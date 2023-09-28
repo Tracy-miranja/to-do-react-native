@@ -1,6 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
+
 import { StyleSheet, Text, View,FlatList } from 'react-native';
 import { useState } from 'react';
+import Header from './components/header';
+import TodoItem from './components/todoItem';
+import AddTodo from './components/addTodo';
 
 export default function App() {
   const [todos, setTodos]= useState([
@@ -9,16 +12,23 @@ export default function App() {
     {text:'buy sapper', key:'3'},
     {text:'Arrange the table', key:'4'}
   ])
+  const pressHandler= (key)=>{
+    setTodos((prevTodos)=>{
+      return prevTodos.filter(todo=>todo.key !=key)
+    })
+  }
   return (
     <View style={styles.container}>
      {/* header*/}
+     <Header/>
      <View style={styles.content}>
       {/*to do form*/}
+      <AddTodo/>
       <View style={styles.lists}>
         <FlatList
           data={todos}
           renderItem={({item})=>(
-            <Text>{item.text}</Text>
+            <TodoItem item={item} pressHandler={pressHandler}/>
           )}
         />
       </View>
@@ -31,13 +41,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   content: {
     padding: 40.
   },
-  list:{
+  lists:{
     margin:20
   }
 
