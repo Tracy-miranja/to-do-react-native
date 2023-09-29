@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 
 
-export default function AddTodo(){
+export default function AddTodo({submitHandler}){
     const [text, setText]= useState('')
     const changeHandler=(val)=>{
        setText(val);
@@ -15,7 +15,7 @@ export default function AddTodo(){
         placeholder='new Todo...'
         onChangeText={changeHandler}
         />
-      <Button onPress={()=>text} title='Add todo' color='coral'/>
+      <Button onPress={()=>submitHandler(text)} title='Add todo' color='coral'/>
       </View>
     )
 }
